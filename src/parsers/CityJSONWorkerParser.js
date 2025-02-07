@@ -12,6 +12,7 @@ import { TriangleParser } from './geometry/TriangleParser.js';
 import { LineParser } from './geometry/LineParser.js';
 import { PointParser } from './geometry/PointParser.js';
 import { CityObjectsInstancedMesh } from '../objects/CityObjectsInstancedMesh.js';
+import ParserWorker from './helpers/ParserWorker.js?worker'
 
 export class CityJSONWorkerParser {
 
@@ -77,7 +78,8 @@ export class CityJSONWorkerParser {
 
 		// Sets the web worker that will parse all normal (ie non-instanced)
 		// geometries
-		const worker = new Worker( new URL( "./helpers/ParserWorker.js", import.meta.url ), { type: "module" } );
+		const worker = new ParserWorker()
+		// const worker = new Worker( new URL( "./helpers/ParserWorker.js", import.meta.url ), { type: "module" } );
 		const m = this.matrix;
 		const onChunkLoad = this.onChunkLoad;
 		const onComplete = this.onComplete;
